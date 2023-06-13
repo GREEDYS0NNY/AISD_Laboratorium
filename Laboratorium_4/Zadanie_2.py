@@ -1,29 +1,40 @@
-def Merge(A):
-    if len(A) > 1:
-        m = len(A) // 2
-        l = A[:m]
-        r = A[m:]
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
 
-        Merge(l)
-        Merge(r)
+    mid = len(arr) // 2
+    l = arr[:mid]
+    r = arr[mid:]
 
-        i = j = k = 0
-        while i < len(l) and j < len(r):
-            if l[i] < r[j]:
-                A[k] = l[i]
-                i += 1
-            else:
-                A[k] = r[j]
-                j += 1
-            k += 1
+    l = merge_sort(l)
+    r = merge_sort(r)
 
-        while i < len(l):
-            A[k] = l[i]
+    return merge(l, r)
+
+
+def merge(left, right):
+    result = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
             i += 1
-            k += 1
-
-        while j < len(r):
-            A[k] = r[j]
+        else:
+            result.append(right[j])
             j += 1
-            k += 1
+
+    while i < len(left):
+        result.append(left[i])
+        i += 1
+
+    while j < len(right):
+        result.append(right[j])
+        j += 1
+
+    return result
+
+
+data = [42, 68, 35, 65, 1, 25, 79, 59, 70, 55]
+print(merge_sort(data))
 
